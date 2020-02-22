@@ -1,6 +1,7 @@
 package com.example.feature.adapter.http.v1;
 
 import com.example.feature.adapter.http.v1.dto.FeatureDto;
+import com.example.feature.adapter.http.v1.dto.FeaturesDto;
 import com.example.feature.service.FeatureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -25,6 +26,11 @@ public class FeatureController {
     @GetMapping(path = "/features/{id}/quicklook", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getImageById(@PathVariable UUID id) {
         return featureService.getQuickLookById(id);
+    }
+
+    @GetMapping(path = "/features", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FeaturesDto getAll() {
+        return featureService.getAll();
     }
 
 }

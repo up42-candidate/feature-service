@@ -1,6 +1,7 @@
 package com.example.feature.service;
 
 import com.example.feature.adapter.http.v1.dto.FeatureDto;
+import com.example.feature.adapter.http.v1.dto.FeaturesDto;
 import com.example.feature.exception.FeatureNotFoundException;
 import com.example.feature.exception.QuicklookNotFoundException;
 import com.example.feature.model.Feature;
@@ -32,6 +33,10 @@ public class FeatureService {
     public byte[] getQuickLookById(UUID id) {
         return ofNullable(getFeature(id).getProperties().getQuicklook())
                 .orElseThrow(() -> new QuicklookNotFoundException(id));
+    }
+
+    public FeaturesDto getAll() {
+        return featureConverter.toFeaturesDto(featureRepository.getAll());
     }
 
 }

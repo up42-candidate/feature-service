@@ -66,4 +66,30 @@ class FeatureControllerIntTest extends Specification {
         up42Image.file.bytes == result
     }
 
+    def '/features should return features'() {
+        given:
+        def path = "/features"
+
+        when:
+        def result = http.get(Map.class) {
+            request.uri.path = path
+        }
+
+        then:
+        ((List) result.features).toSet() == [
+                [
+                        id              : '39c2f29e-c0f8-4a39-a98b-deed547d6aea',
+                        timestamp       : 1554831167697,
+                        beginViewingDate: 1554831167697,
+                        endViewingDate  : 1554831202043,
+                        missionName     : 'Sentinel-1'
+                ], [
+                        id              : 'cf5dbe37-ab95-4af1-97ad-2637aec4ddf0',
+                        timestamp       : 1556904743783,
+                        beginViewingDate: 1556904743783,
+                        endViewingDate  : 1556904768781,
+                        missionName     : 'Sentinel-1'
+                ]
+        ].toSet()
+    }
 }
