@@ -1,5 +1,6 @@
 package com.example.feature.repository;
 
+import com.example.feature.model.Feature;
 import com.example.feature.model.FeatureCollection;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,8 @@ import org.springframework.core.io.Resource;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
@@ -22,6 +25,9 @@ import static java.util.stream.Collectors.toMap;
 @Configuration
 @RequiredArgsConstructor
 public class FeatureConfiguration {
+    private static final TypeReference<List<FeatureCollection>> FEATURE_LIST_TYPE =
+            new TypeReference<List<FeatureCollection>>() {
+            };
 
     @NonNull
     @Value("classpath:${application.static-data-file}")
@@ -31,13 +37,25 @@ public class FeatureConfiguration {
     private final ObjectMapper mapper;
 
     @Bean
-    @SneakyThrows
-    FeatureRepository featureRepository() {
-        return new FeatureRepository(mapper.readValue(data.getURL(), new TypeReference<List<FeatureCollection>>() {
-        }).stream()
+    FeatureRepository featureStaticRepository() {
+        log.info("Reading static data from {}", data);
+        return new FeatureStaticRepository(loadFeatures());
+    }
+
+    private Map<UUID, Feature> loadFeatures() {
+        return readFeatures().stream()
                 .map(FeatureCollection::getFeatures)
                 .flatMap(Collection::stream)
-                .collect(toMap(feature -> feature.getProperties().getId(), identity())));
+                .collect(toMap(this::getFeatureId, identity()));
+    }
+
+    private UUID getFeatureId(Feature feature) {
+        return feature.getProperties().getId();
+    }
+
+    @SneakyThrows
+    private List<FeatureCollection> readFeatures() {
+        return mapper.readValue(data.getURL(), FEATURE_LIST_TYPE);
     }
 
 }
