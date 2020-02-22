@@ -10,14 +10,14 @@
 
     <groupId>com.example</groupId>
     <artifactId>feature-service</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>UP42 Feature Service</name>
 
     <scm>
         <connection>scm:git:https://github.com/up42-candidate/feature-service.git</connection>
         <url>https://github.com/up42-candidate/feature-service</url>
         <developerConnection>scm:git:https://github.com/up42-candidate/feature-service.git</developerConnection>
-      <tag>feature-service-0.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
