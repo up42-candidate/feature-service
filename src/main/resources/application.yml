@@ -1,3 +1,6 @@
 spring:
   application:
     name: feature-service
+
+application:
+  static-data-file: data.json
