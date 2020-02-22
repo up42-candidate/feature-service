@@ -15,6 +15,7 @@ public class Feature {
         private UUID id;
         private Acquisition acquisition;
         private OffsetDateTime timestamp;
+        private byte[] quicklook;
 
         @Data
         public static class Acquisition {

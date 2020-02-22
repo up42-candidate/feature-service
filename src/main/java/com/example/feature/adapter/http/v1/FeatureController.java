@@ -22,4 +22,9 @@ public class FeatureController {
         return featureService.getById(id);
     }
 
+    @GetMapping(path = "/features/{id}/quicklook", produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] getImageById(@PathVariable UUID id) {
+        return featureService.getQuickLookById(id);
+    }
+
 }
