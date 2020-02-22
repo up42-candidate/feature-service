@@ -26,4 +26,8 @@ public class FeatureService {
                 .orElseThrow(() -> new FeatureNotFoundException(id));
     }
 
+    public byte[] getQuickLookById(UUID id) {
+        return getFeature(id).getProperties().getQuicklook();
+    }
+
 }
