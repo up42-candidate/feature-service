@@ -1,2 +1,1 @@
-# feature-service
-UP42 Feature Service
+# UP42 Feature Service
