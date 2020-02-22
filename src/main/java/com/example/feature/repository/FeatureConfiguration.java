@@ -29,9 +29,8 @@ public class FeatureConfiguration {
             new TypeReference<List<FeatureCollection>>() {
             };
 
-    @NonNull
     @Value("classpath:${application.static-data-file}")
-    private final Resource data;
+    private Resource data;
 
     @NonNull
     private final ObjectMapper mapper;
